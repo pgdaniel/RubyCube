@@ -147,6 +147,16 @@ int main() {
     printf("Length of unsigned long long %llu\n", ULLONG_MAX);
 
 
+    for(int i = 0; i < 1000000; i++) {
+      if(binary_choice()) {
+        rotate_x_clockwise(0, &cube);
+      } else {
+        rotate_y_clockwise(1, &cube);
+      }
+    }
+
+    print_cube(&cube);
+
     for(;;) {
       if(binary_choice()) {
         rotate_x_clockwise(0, &cube);

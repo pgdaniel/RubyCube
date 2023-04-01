@@ -64,20 +64,11 @@ typedef struct {
   int binary_choice() {
     return rand() % 2;
   }
-
-  int solved(Cube *cube) {
-    for(int i = 0; i < 6; i++) {
-        for(int j = 0; j < 3; j++) {
-            for(int k = 0; k < 3; k++) {
-                if(cube->cube[i][j][k] != cube->cube[0][0][0]) {
-                    return 0;
-                }
-            }
-        }
-    }
-
-    return 1;
+  
+  int layer_choice() {
+    return rand() % 3;
   }
+
 
   void print_cube(Cube *cube) {
     for(int i = 0; i < 6; i++) {
@@ -89,6 +80,20 @@ typedef struct {
         }
         puts("-----------------");
     }
+  }
+
+  int solved(Cube *cube) {
+    for(int i = 0; i < 6; i++) {
+        for(int j = 0; j < 3; j++) {
+            for(int k = 0; k < 3; k++) {
+                if(cube->cube[i][j][k] != cube->cube[i][0][0]) {
+                    return 0;
+                }
+            }
+        }
+    }
+
+    return 1;
   }
 
 // Initialize the cube
@@ -149,9 +154,9 @@ int main() {
 
     for(int i = 0; i < 1000000; i++) {
       if(binary_choice()) {
-        rotate_x_clockwise(0, &cube);
+        rotate_x_clockwise(layer_choice(), &cube);
       } else {
-        rotate_y_clockwise(1, &cube);
+        rotate_y_clockwise(layer_choice(), &cube);
       }
     }
 
@@ -159,9 +164,9 @@ int main() {
 
     for(;;) {
       if(binary_choice()) {
-        rotate_x_clockwise(0, &cube);
+        rotate_x_clockwise(layer_choice(), &cube);
       } else {
-        rotate_y_clockwise(1, &cube);
+        rotate_y_clockwise(layer_choice(), &cube);
       }
 
       if(solved(&cube)) {
